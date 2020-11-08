@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo Grocery Shop - Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href=".././css/shop.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<!-------- 
+
+	https://codepen.io/john-mantas/pen/bxmrBq
+
+	--------->
+</head>
+<body>
+<div class="overlay"></div>
+<div class="spanner">
+  <div class="loader"></div>
+  <p>You are being redirected to the payment page.</p>
+</div>
+<nav><p class="top-text">How about a healthy snack? <span>&#128524;</span></p></nav>
+<div class="guide"><div><p>Click <span>Buy Apples Now!</span> to make a test payment.</p></div></div>
+<section class="product">
+	<div class="product__photo">
+		<div class="photo-container">
+			<div class="photo-main">
+				<div class="controls">
+					<i class="material-icons">share</i>
+					<i class="material-icons">favorite_border</i>
+				</div>
+				<img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762748/images/green-apple-with-slice.png" alt="green apple slice">
+			</div>
+			<div class="photo-album">
+				<ul>
+					<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762745/images/green-apple2.png" alt="green apple"></li>
+					<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762745/images/half-apple.png" alt="half apple"></li>
+					<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762744/images/green-apple-flipped.png" alt="green apple"></li>
+					<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762744/images/apple-top.png" alt="apple top"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="product__info">
+		<div class="title">
+			<h1>Delicious Apples</h1>
+			<span>COD: 45999</span>
+		</div>
+		<div class="price">
+			<span data-type="currency">EUR</span> <span data-type="price">7.93</span>
+		</div>
+		<div class="variant">
+			<h3>SELECT A COLOR</h3>
+			<ul>
+				<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762745/images/green-apple2.png" alt="green apple"></li>
+				<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762745/images/yellow-apple.png" alt="yellow apple"></li>
+				<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762746/images/orange-apple.png" alt="orange apple"></li>
+				<li><img src="https://res.cloudinary.com/erdal-cay/image/upload/v1604762745/images/red-apple.png" alt="red apple"></li>
+			</ul>
+		</div>
+		<div class="description">
+			<h3>BENEFITS</h3>
+			<ul>
+				<li>Apples are nutricious</li>
+				<li>Apples may be good for weight loss</li>
+				<li>Apples may be good for bone health</li>
+				<li>They're linked to a lowest risk of diabetes</li>
+			</ul>
+		</div>
+		<button class="buy--btn">BUY APPLES NOW!</button>
+	</div>
+</section>
+<div class="change-view"><a href="/admin"><div class="btn-container"><div class='button bounce -salmon center'>Go to Admin view</div></div></a></div>
+<footer><div><p>Demo Grocery Shop</p><div></footer>
+<script type="text/javascript" src=".././js/shop.js"></script>
+<script type="text/javascript">
+	
+	$(".buy--btn").click(() => {
+	  $("div.spanner").addClass("show");
+	  $("div.overlay").addClass("show");
+	});
+
+</script>
+</body>
+</html>
