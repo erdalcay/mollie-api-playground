@@ -1,3 +1,3 @@
 # Mollie API Playground
 
-Demo app to get start with discovering Mollie's payments APIs.
+Demo app to get started with discovering Mollie's payments APIs.
