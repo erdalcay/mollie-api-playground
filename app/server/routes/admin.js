@@ -5,6 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const staticFilePath = path.join(__dirname, '../../../shop/admin/html');
 
 /**
  * Admin home
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
  * Dashboard
  */
 router.get('/dashboard', async (req, res) => {
-	res.sendFile(path.join(__dirname, '../../../grocery-shop/html/shop.html'));
+	res.sendFile(path.join(staticFilePath, 'dashboard.html'));
 });
 
 

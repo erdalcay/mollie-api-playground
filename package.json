@@ -2,12 +2,13 @@
   "name": "mollie-api-playground",
   "version": "1.0.0",
   "description": "Mollie API Playground",
-  "main": "index.js",
+  "main": "./app/server/app.js",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.20",
     "nedb": "^1.8.0"
   }
 }

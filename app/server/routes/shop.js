@@ -8,7 +8,7 @@ const path = require('path');
 const {Payments} = require('../../lib/mollie');
 const payments = new Payments();
 const ordersdb = new (require('../../db/db'))('orders');
-
+const staticFilePath = path.join(__dirname, '../../../shop/shop/html');
 /**
  * Home page
  */
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
  * Shop home page
  */
 router.get('/home', async (req, res) => {
-	res.sendFile(path.join(__dirname, '../../../grocery-shop/html/shop.html'));
+	res.sendFile(path.join(staticFilePath, 'shop.html'));
 });
 
 /**
@@ -28,7 +28,7 @@ router.get('/home', async (req, res) => {
  */
 router.get('/order-success', async (req, res) => {
 	res.status(200);
-	res.sendFile(path.join(__dirname, '../../../grocery-shop/html/confirm.html'));
+	res.sendFile(path.join(staticFilePath, 'confirm.html'));
 });
 
 /**
@@ -36,7 +36,7 @@ router.get('/order-success', async (req, res) => {
  */
 router.get('/order-error', async (req, res) => {	
 	res.status(200);
-	res.sendFile(path.join(__dirname, '../../../grocery-shop/html/error.html'));
+	res.sendFile(path.join(staticFilePath, 'error.html'));
 });
 
 /**
@@ -44,7 +44,7 @@ router.get('/order-error', async (req, res) => {
  */
 router.get('/unsuccessful-order', async (req, res) => {	
 	res.status(200);
-	res.sendFile(path.join(__dirname, '../../../grocery-shop/html/unsuccessful-order.html'));
+	res.sendFile(path.join(staticFilePath, 'unsuccessful-order.html'));
 });
 
 /**

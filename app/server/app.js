@@ -7,6 +7,8 @@ const ordersdb = new (require('../db/db'))();
 const {Payments} = require('../lib/mollie');
 const payments = new Payments();
 
+console.log(process.env, 'appjs')
+
 /**
  * Bring in the routes
  */
@@ -19,23 +21,18 @@ app.use('/api', apiRoute);
 app.use('/shop', shopRoute);
 app.use('/admin', adminRoute);
 
-
-/**
- * Deal with post body
- */ 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-
 /**
  * Serve static files
  */
-app.use(express.static(path.join(__dirname, '../../grocery-shop')));
+const staticShop = path.join(__dirname, '../../shop/shop');
+const staticAdmin = path.join(__dirname, '../../shop/admin');
+app.use(express.static(staticShop));
+app.use(express.static(staticAdmin));
 
 /**
  * Home page
  */
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
 	res.redirect('/shop');
 });
 
@@ -44,7 +41,7 @@ app.get('/', async (req, res) => {
  */
 app.use((req, res) => {
 	res.status(404)
-	res.sendFile(path.join(__dirname, '../../grocery-shop/html/404.html'));
+	res.sendFile(path.join(staticShop, 'html', '404.html'));
 });
 
-app.listen(process.env.port || 3000);
+app.listen(8080);

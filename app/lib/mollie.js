@@ -12,11 +12,11 @@ const HTTPClient = require('./http');
  */
 class MollieClient extends HTTPClient {
 	
-	constructor(host = 'api.mollie.com', apiKey = process.env.MOLLIE_API_KEY) {
+	constructor(host = 'api.mollie.com', apiKey = process.env.MOLLIE_API_KEY, serverName = process.env.SERVER_NAME) {
 		super();
 		this.host = host;
 		this.apiKey = apiKey;
-		this.serverName = 'https://solutionsengineering.app';
+		this.serverName = serverName;
 	}
 
 	/**
@@ -166,6 +166,39 @@ class Payments extends MollieClient {
 }
 
 /**
+ * Class that communicates with Orders API
+ *
+ * @extends MollieClient
+ * 		
+ * @method getAllOrders - Lists all payments
+ * 		
+ */
+class Orders extends MollieClient {
+
+	constructor(endpoint = '/v2/orders') {
+		super();
+		this.endpoint = endpoint;
+	}
+
+	/**
+	 * Retrieve all orders
+	 *
+	 * @param {object} pagination
+	 * @param {string} [pagination.from] - Order ID to offset the pagination
+	 * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
+	 */
+	getAllOrders(pagination) {
+		const {from = null, limit = 250} = pagination ? pagination : {};
+		return this.callMollie('GET', {
+			'endpoint': this.endpoint,
+			'path': '',
+			'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
+		});
+	}
+
+}
+
+/**
  * Class that communicates with Methods API
  *
  * @extends MollieClient
@@ -301,4 +334,4 @@ class Refunds extends MollieClient {
 
 } 
 
-module.exports = {Payments, Methods, Refunds};
+module.exports = {Payments, Methods, Refunds, Orders};
