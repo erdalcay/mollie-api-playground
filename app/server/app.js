@@ -7,8 +7,6 @@ const ordersdb = new (require('../db/db'))();
 const {Payments} = require('../lib/mollie');
 const payments = new Payments();
 
-console.log(process.env, 'appjs')
-
 /**
  * Bring in the routes
  */

@@ -1,6 +1,5 @@
 'use-strict';
 const lodash = require('lodash');
-
 /**
  * Class that creates JSON response for Shop's APIs
  *
@@ -23,16 +22,25 @@ class Response {
 		}
 	}
 
+	/**
+	 * Get the model
+	 */
 	get() {
 		return this.model;
 	}
 
+	/**
+	 * Create titles
+	 */
 	createTitles() {
 		const titles = {'payments': {'title': 'Payments', 'subtitle': 'Payment history of your organization'}, 'refunds': {'title': 'Refunds', 'subtitle': 'Issued refunds'}, 'orders': {'title': 'Orders', 'subtitle': 'Order history of your organization'}, 'methods': {'title': 'Methods', 'subtitle': 'Enabled payment methods for your organization'}}
 		this.model.pageTitle = titles[this.model.type].title;
 		this.model.tableTitle = titles[this.model.type].subtitle;
 	}
 
+	/**
+	 * Create headers
+	 */
 	createHeaders() {
 		const headers = {
 			'payments': ['Method', 'Amount', 'Status', 'Details', 'Date', ''],
@@ -44,6 +52,9 @@ class Response {
 		this.model.headers = headers[this.model.type];
 	}
 
+	/**
+	 * Create rows
+	 */
 	createRows(data) {
 		const models = {
 			'payments': {'method': {'type': 'method', 'value': '', 'colType': 'rowHeader'}, 'amount': {'type': 'amount', 'value': '', 'colType': 'plain'}, 'status': {'type': 'status', 'value': '', 'colType': 'badge'}, 'description': {'type': 'details', 'value': '', 'colType': 'plain'}, 'createdAt': {'type': 'date', 'value': '', 'colType': 'plain'}, 'resource': {'type': 'action', 'value': '', 'colType': 'action'}},
@@ -86,6 +97,9 @@ class Response {
 		
 	}
 
+	/**
+	 * Generate the model
+	 */
 	buildResponse(data) {
 		this.createTitles();
 		this.createHeaders();
