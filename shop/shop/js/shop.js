@@ -12,7 +12,7 @@
     ];
 
     $.ajax({
-        url: `https://solutionsengineering.app:8080/api/create-payment?productId=${productId}&amount=${amount}&currency=${currency}`,
+        url: `https://solutiongineer.com/api/create-payment?productId=${productId}&amount=${amount}&currency=${currency}`,
         type: 'GET',
         success: (response) => {
           if (response.error) {

@@ -154,7 +154,7 @@ class Payments extends MollieClient {
   /**
    * Delete a payment
    *
-   * @param {string} paymentId - Mollie-generated payment ID on [@createPayment] request.
+   * @param {string} paymentId - Mollie-generated payment ID.
    */
   deleteSinglePayment(paymentId) {
     return this.callMollie('DELETE', {
@@ -170,7 +170,7 @@ class Payments extends MollieClient {
  *
  * @extends MollieClient
  *    
- * @method getAllOrders - Lists all payments
+ * @method getAllOrders - Lists all orders
  *    
  */
 class Orders extends MollieClient {
