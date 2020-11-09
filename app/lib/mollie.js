@@ -11,28 +11,28 @@ const HTTPClient = require('./http');
  * @method handleAPIErrors - Enhances API response with the simplests of error definitions
  */
 class MollieClient extends HTTPClient {
-	
-	constructor(host = 'api.mollie.com', apiKey = process.env.MOLLIE_API_KEY, serverName = process.env.SERVER_NAME) {
-		super();
-		this.host = host;
-		this.apiKey = apiKey;
-		this.serverName = serverName;
-	}
+  
+  constructor(host = 'api.mollie.com', apiKey = process.env.MOLLIE_API_KEY, serverName = process.env.SERVER_NAME) {
+    super();
+    this.host = host;
+    this.apiKey = apiKey;
+    this.serverName = serverName;
+  }
 
-	/**
-	 * Calls Mollie API in a dynamic fashion
-	 *
-	 * @param {string} method - HTTP request method 
-	 * @param {object} req
-	 * @param {string} [req.endpoint] - Mollie API endpoint to be called
-	 * @param {string} [req.path] - Pathname to be concatenate with [req.endpoint]
-	 * @param {string} [req.body] - HTTP POST body string.
-	 * @param {string} [req.query] - Query params string
- 	 */
-	callMollie(method, req) {
-		return this.apiRequest(method, {
-			'host': this.host,
-			'path': req.endpoint + req.path,
+  /**
+   * Calls Mollie API in a dynamic fashion
+   *
+   * @param {string} method - HTTP request method 
+   * @param {object} req
+   * @param {string} [req.endpoint] - Mollie API endpoint to be called
+   * @param {string} [req.path] - Pathname to be concatenate with [req.endpoint]
+   * @param {string} [req.body] - HTTP POST body string.
+   * @param {string} [req.query] - Query params string
+   */
+  callMollie(method, req) {
+    return this.apiRequest(method, {
+      'host': this.host,
+      'path': req.endpoint + req.path,
       'body': req.body,
       'query': req.query,
       'headers': {
@@ -40,35 +40,35 @@ class MollieClient extends HTTPClient {
         'Accept': 'application/hal+json',
         'Content-Type': 'application/json'
       }
-		})
-		.then(
-			(response) => this.handleAPIErrors(response)
-		);
-	}
+    })
+    .then(
+      (response) => this.handleAPIErrors(response)
+    );
+  }
 
-	/**
-	 * Simple error handler based on HTTP status
-	 *
-	 * @param {object} apiResponse
-	 * @param {string<object<application/hal+json>>} [apiResponse.body] - Message returned by Mollie API 
-	 * @param {integer} [apiResponse.status] - HTTP status code returned by Mollie API
-	 */
-	handleAPIErrors(apiResponse) {
-		return new Promise((resolve, reject) => {
-			let {body, status, error = null, errorType = null} = apiResponse;
-			const apiStatus = apiResponse.status.toString();
-			// 5xx
-			if (apiStatus.match(/50[0-9]/)) {
-				resolve({body, status, error: true, errorType: 'serverError'});
-			}
-			// 4xx
-			if (apiStatus.match(/4[0-9]{2}/)) {
-				resolve({body, status, error: true, errorType: 'badRequest'});
-			}
-			// 2xx
-			resolve({body, status, error, errorType })
-		});
-	}
+  /**
+   * Simple error handler based on HTTP status
+   *
+   * @param {object} apiResponse
+   * @param {string<object<application/hal+json>>} [apiResponse.body] - Message returned by Mollie API 
+   * @param {integer} [apiResponse.status] - HTTP status code returned by Mollie API
+   */
+  handleAPIErrors(apiResponse) {
+    return new Promise((resolve, reject) => {
+      let {body, status, error = null, errorType = null} = apiResponse;
+      const apiStatus = apiResponse.status.toString();
+      // 5xx
+      if (apiStatus.match(/50[0-9]/)) {
+        resolve({body, status, error: true, errorType: 'serverError'});
+      }
+      // 4xx
+      if (apiStatus.match(/4[0-9]{2}/)) {
+        resolve({body, status, error: true, errorType: 'badRequest'});
+      }
+      // 2xx
+      resolve({body, status, error, errorType })
+    });
+  }
 
 }
 
@@ -76,92 +76,92 @@ class MollieClient extends HTTPClient {
  * Class that communicates with Payments API
  *
  * @extends MollieClient
- * 		
+ *    
  * @method createPayment - Creates a new payment
  * @method getSinglePayment - Gets details of a single payment
  * @method getAllPayments - Lists all payments
  * @method deleteSinglePayment - Deletes a single payment
- * 		
+ *    
  */
 class Payments extends MollieClient {
 
-	constructor(endpoint = '/v2/payments') {
-		super();
-		this.endpoint = endpoint;
-		this.redirectUrl = `${this.serverName}/shop/checkout-response?id=`;
-		this.webhookUrl = `${this.serverName}/api/news-from-mollie`;
-	}
+  constructor(endpoint = '/v2/payments') {
+    super();
+    this.endpoint = endpoint;
+    this.redirectUrl = `${this.serverName}/shop/checkout-response?id=`;
+    this.webhookUrl = `${this.serverName}/api/news-from-mollie`;
+  }
 
-	/**
-	 * Create new payment
-	 *
-	 * @param {object} transactionData
-	 * @param {string} [transactionData.amount] - Amount to be charged. Dot seperated decimals.
-	 * @param {string} [transactionData.currency] - Currency code in ISO 4217 format. Supported currencies: https://docs.mollie.com/payments/multicurrency
-	 * @param {string} [transactionData.orderId] - Transaction ID generated by the shop.
-	 * @param {string} [transactionData.productId] - Id of the product purchased in this transaction.
-	 */
-	createPayment(transactionData) {
-		const {amount, currency, orderId, productId} = transactionData;
-		const payload = {
-	    "amount": {
-		      "currency": `${currency}`,
-		      "value": `${amount}`
-	    },
-	    "description": `Order #${orderId}`,
-	    "redirectUrl": `${this.redirectUrl}${orderId}`, 
-	    "webhookUrl": this.webhookUrl,
-	    "metadata": {
-	      "orderId": `${orderId}`,
-	      "productId": `${productId}`
-	    }
-		}
-		return this.callMollie('POST', {
-			'endpoint': this.endpoint,
-			'path': '',
-			'body': JSON.stringify(payload)
-		});
-	}
+  /**
+   * Create new payment
+   *
+   * @param {object} transactionData
+   * @param {string} [transactionData.amount] - Amount to be charged. Dot seperated decimals.
+   * @param {string} [transactionData.currency] - Currency code in ISO 4217 format. Supported currencies: https://docs.mollie.com/payments/multicurrency
+   * @param {string} [transactionData.orderId] - Transaction ID generated by the shop.
+   * @param {string} [transactionData.productId] - Id of the product purchased in this transaction.
+   */
+  createPayment(transactionData) {
+    const {amount, currency, orderId, productId} = transactionData;
+    const payload = {
+      "amount": {
+          "currency": `${currency}`,
+          "value": `${amount}`
+      },
+      "description": `Order #${orderId}`,
+      "redirectUrl": `${this.redirectUrl}${orderId}`, 
+      "webhookUrl": this.webhookUrl,
+      "metadata": {
+        "orderId": `${orderId}`,
+        "productId": `${productId}`
+      }
+    }
+    return this.callMollie('POST', {
+      'endpoint': this.endpoint,
+      'path': '',
+      'body': JSON.stringify(payload)
+    });
+  }
 
-	/**
-	 * Retrieve details about a single payment
-	 *
-	 * @param {string} paymentId - Mollie-generated payment ID on [@createPayment] request.
-	 */
-	getSinglePayment(paymentId) {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentId}`
-		});
-	}
+  /**
+   * Retrieve details about a single payment
+   *
+   * @param {string} paymentId - Mollie-generated payment ID on [@createPayment] request.
+   */
+  getSinglePayment(paymentId) {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentId}`
+    });
+  }
 
-	/**
-	 * Retrieve all payments
-	 *
-	 * @param {object} pagination
-	 * @param {string} [pagination.from] - Payment ID to offset the pagination
-	 * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
-	 */
-	getAllPayments(pagination) {
-		const {from = null, limit = 250} = pagination ? pagination : {};
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': '',
-			'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
-		});
-	}
+  /**
+   * Retrieve all payments
+   *
+   * @param {object} pagination
+   * @param {string} [pagination.from] - Payment ID to offset the pagination
+   * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
+   */
+  getAllPayments(pagination) {
+    const {from = null, limit = 250} = pagination ? pagination : {};
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': '',
+      'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
+    });
+  }
 
-	/**
-	 * Delete a payment
-	 *
-	 * @param {string} paymentId - Mollie-generated payment ID on [@createPayment] request.
-	 */
-	deleteSinglePayment(paymentId) {
-		return this.callMollie('DELETE', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentId}`
-		});
-	}
+  /**
+   * Delete a payment
+   *
+   * @param {string} paymentId - Mollie-generated payment ID on [@createPayment] request.
+   */
+  deleteSinglePayment(paymentId) {
+    return this.callMollie('DELETE', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentId}`
+    });
+  }
 
 }
 
@@ -169,32 +169,32 @@ class Payments extends MollieClient {
  * Class that communicates with Orders API
  *
  * @extends MollieClient
- * 		
+ *    
  * @method getAllOrders - Lists all payments
- * 		
+ *    
  */
 class Orders extends MollieClient {
 
-	constructor(endpoint = '/v2/orders') {
-		super();
-		this.endpoint = endpoint;
-	}
+  constructor(endpoint = '/v2/orders') {
+    super();
+    this.endpoint = endpoint;
+  }
 
-	/**
-	 * Retrieve all orders
-	 *
-	 * @param {object} pagination
-	 * @param {string} [pagination.from] - Order ID to offset the pagination
-	 * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
-	 */
-	getAllOrders(pagination) {
-		const {from = null, limit = 250} = pagination ? pagination : {};
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': '',
-			'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
-		});
-	}
+  /**
+   * Retrieve all orders
+   *
+   * @param {object} pagination
+   * @param {string} [pagination.from] - Order ID to offset the pagination
+   * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
+   */
+  getAllOrders(pagination) {
+    const {from = null, limit = 250} = pagination ? pagination : {};
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': '',
+      'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
+    });
+  }
 
 }
 
@@ -202,52 +202,52 @@ class Orders extends MollieClient {
  * Class that communicates with Methods API
  *
  * @extends MollieClient
- * 		
+ *    
  * @method getSinglePaymentMethod - Gets the details of a single payment method.
  * @method getAllPaymentMethods - Lists all payment methods available by Mollie.
  * @method getAllEnabledPaymentMethods - Retrieves all payment methods enabled by the organisation.
- * 		
+ *    
  */
 class Methods extends MollieClient {
 
-	constructor(endpoint = '/v2/methods') {
-		super();
-		this.endpoint = endpoint;
-	}
+  constructor(endpoint = '/v2/methods') {
+    super();
+    this.endpoint = endpoint;
+  }
 
-	/**
-	 * Get the details of a single payment method.
-	 *
-	 * @param {string} paymentMethodId - Id for the requested payment method - All payment method IDs are available via https://api.mollie.com/v2/methods/all.
-	 */
-	getSinglePaymentMethod(paymentMethodId) {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentMethodId}`
-		});
-	}
+  /**
+   * Get the details of a single payment method.
+   *
+   * @param {string} paymentMethodId - Id for the requested payment method - All payment method IDs are available via https://api.mollie.com/v2/methods/all.
+   */
+  getSinglePaymentMethod(paymentMethodId) {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentMethodId}`
+    });
+  }
 
-	/**
-	 * List all payment methods available by Mollie.
-	 *
-	 */
-	getAllPaymentMethods() {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': '/all'
-		});
-	}
+  /**
+   * List all payment methods available by Mollie.
+   *
+   */
+  getAllPaymentMethods() {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': '/all'
+    });
+  }
 
-	/**
-	 * Retrieve all payment methods enabled by the organisation.
-	 *
-	 */
-	getAllEnabledPaymentMethods() {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': ''
-		});
-	}
+  /**
+   * Retrieve all payment methods enabled by the organisation.
+   *
+   */
+  getAllEnabledPaymentMethods() {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': ''
+    });
+  }
 
 } 
 
@@ -255,82 +255,82 @@ class Methods extends MollieClient {
  * Class that communicates with Refunds API
  *
  * @extends MollieClient
- * 		
+ *    
  * @method getSinglePaymentMethod - Gets the details of a single payment method.
  * @method getAllPaymentMethods - Lists all payment methods available by Mollie.
  * @method getAllEnabledPaymentMethods - Retrieves all payment methods enabled by the organisation.
- * 		
+ *    
  */
 class Refunds extends MollieClient {
 
-	constructor(endpoint = '/v2/payments') {
-		super();
-		this.endpoint = endpoint;
-	}
+  constructor(endpoint = '/v2/payments') {
+    super();
+    this.endpoint = endpoint;
+  }
 
-	/**
-	 * Create a refund for a given payment
-	 *
-	 * @param {object} refundData
-	 * @param {string} [refundData.paymentId] - Id of the payment that is generating the refund request.
+  /**
+   * Create a refund for a given payment
+   *
+   * @param {object} refundData
+   * @param {string} [refundData.paymentId] - Id of the payment that is generating the refund request.
    * @param {string} [refundData.refundAmount] - Amount to be refunded. Dot seperated decimals.
-	 * @param {string} [refundData.currency] - Currency code in ISO 4217 format. Supported currencies: https://docs.mollie.com/payments/multicurrency
-	 */
-	createRefund(refundData) {
-		const {paymentId, refundAmount, currency} = refundData;
-		const payload = {
-	    "amount": {
-	      "value": refundAmount,
-	      "currency": currency
-	    }
-		}
-		return this.callMollie('POST', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentId}/refunds`,
-			'body': JSON.stringify(payload)
-		});
-	}
+   * @param {string} [refundData.currency] - Currency code in ISO 4217 format. Supported currencies: https://docs.mollie.com/payments/multicurrency
+   */
+  createRefund(refundData) {
+    const {paymentId, refundAmount, currency} = refundData;
+    const payload = {
+      "amount": {
+        "value": refundAmount,
+        "currency": currency
+      }
+    }
+    return this.callMollie('POST', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentId}/refunds`,
+      'body': JSON.stringify(payload)
+    });
+  }
 
-	/**
-	 * Fetch details for an issued refund.
-	 *
-	 * @param {string} paymentId - Id of the payment to which the refund is issued.
-	 * @param {string} refundId - Id of the refund. Can be acquired via https://api.mollie.com/v2/refunds or https://api.mollie.com/v2/payments/PAYMENT_ID/refunds
-	 */
-	getSingleRefundForPayment(paymentId, refundId) {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentId}/refunds/${refundId}`
-		});
-	}
+  /**
+   * Fetch details for an issued refund.
+   *
+   * @param {string} paymentId - Id of the payment to which the refund is issued.
+   * @param {string} refundId - Id of the refund. Can be acquired via https://api.mollie.com/v2/refunds or https://api.mollie.com/v2/payments/PAYMENT_ID/refunds
+   */
+  getSingleRefundForPayment(paymentId, refundId) {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentId}/refunds/${refundId}`
+    });
+  }
 
-	/**
-	 * List all refunds issued for a single payment.
-	 *
-	 * @param {string} paymentId - Id of the payment to fetch the issued refunds for.
-	 */
-	getAllRefundsForPayment(paymentId) {
-		return this.callMollie('GET', {
-			'endpoint': this.endpoint,
-			'path': `/${paymentId}/refunds`
-		})
-	}
+  /**
+   * List all refunds issued for a single payment.
+   *
+   * @param {string} paymentId - Id of the payment to fetch the issued refunds for.
+   */
+  getAllRefundsForPayment(paymentId) {
+    return this.callMollie('GET', {
+      'endpoint': this.endpoint,
+      'path': `/${paymentId}/refunds`
+    })
+  }
 
-	/**
-	 * Retrieve all refunds.
-	 *
-	 * @param {object} pagination
- 	 * @param {string} [pagination.from] - Refund Id to offset the pagination
-	 * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
-	 */
-	getAllRefunds(pagination) {
-		const {limit = 250, from = null} = pagination ? pagination : {};
-		return this.callMollie('GET', {
-			'endpoint': '/v2/refunds',
-			'path': '',
-			'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
-		});
-	}
+  /**
+   * Retrieve all refunds.
+   *
+   * @param {object} pagination
+   * @param {string} [pagination.from] - Refund Id to offset the pagination
+   * @param {integer} [pagination.limit] - Indicates the number of results returned in each result. Max value is 250.
+   */
+  getAllRefunds(pagination) {
+    const {limit = 250, from = null} = pagination ? pagination : {};
+    return this.callMollie('GET', {
+      'endpoint': '/v2/refunds',
+      'path': '',
+      'query': from ? `from=${from}&limit=${limit}` : `limit=${limit}`
+    });
+  }
 
 } 
 

@@ -22,64 +22,52 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
 }
-
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
-
 body {
   line-height: 1;
   overflow: hidden;
 }
-
 ol, ul {
   list-style: none;
 }
-
 blockquote, q {
   quotes: none;
 }
-
 blockquote:before, blockquote:after,
 q:before, q:after {
   content: '';
   content: none;
 }
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 * {
   box-sizing: border-box;
 }
-
 html,
 body {
   height: 100%;
 }
-
 body {
   display: grid;
   font-family: 'Baloo 2', cursive;
   background-color: #f2f2f2;
 }
-
 h3 {
   font-size: 0.7em;
   letter-spacing: 1.2px;
   color: #a6a6a6;
 }
-
 img {
   max-width: 100%;
   -webkit-filter: drop-shadow(1px 1px 3px #a6a6a6);
           filter: drop-shadow(1px 1px 3px #a6a6a6);
 }
-
 nav {
   height: 100px;
   /*background-color: white;*/
@@ -89,7 +77,6 @@ nav {
   /*border-bottom: 1px solid rgba(255, 63, 64, 1);*/
   /*box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.05);*/
 }
-
 nav p {
   font-size: 2em;
   /*width: 30%;*/
@@ -101,7 +88,6 @@ nav p {
   /*margin: 0 auto;*/
   color: rgba(0,0,0,0.8);
 }
-
 .wrapper {
   position: absolute;
   top: 50%;
@@ -110,7 +96,6 @@ nav p {
   text-align:center;
   transform: translateX(-50%);
 }
-
 .spanner {
   position:absolute;
   top: 50%;
@@ -125,7 +110,6 @@ nav p {
   z-index: 1000;
   visibility: hidden;
 }
-
 .overlay {
   position: fixed;
   width: 100%;
@@ -133,7 +117,6 @@ nav p {
   background: rgba(0,0,0,0.5);
   visibility: hidden;
 }
-
 .loader,
 .loader:before,
 .loader:after {
@@ -145,7 +128,6 @@ nav p {
   -webkit-animation: load7 1.8s infinite ease-in-out;
   animation: load7 1.8s infinite ease-in-out;
 }
-
 .loader {
   color: #ffffff;
   font-size: 10px;
@@ -158,24 +140,20 @@ nav p {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
-
 .loader:before,
 .loader:after {
   content: '';
   position: absolute;
   top: 0;
 }
-
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-
 .loader:after {
   left: 3.5em;
 }
-
 @-webkit-keyframes load7 {
   0%,
   80%,
@@ -186,7 +164,6 @@ nav p {
     box-shadow: 0 2.5em 0 0;
   }
 }
-
 @keyframes load7 {
   0%,
   80%,
@@ -197,24 +174,18 @@ nav p {
     box-shadow: 0 2.5em 0 0;
   }
 }
-
 .show {
   visibility: visible;
 }
-
 .spanner, .overlay{
   opacity: 0;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
 }
-
 .spanner.show, .overlay.show {
   opacity: 1
 }
-
-
-/* ----- Product Section ----- */
 .product {
   display: grid;
   grid-template-columns: 0.9fr 1fr;
@@ -227,12 +198,9 @@ nav p {
   border-radius: 5px;
   box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
 }
-
-/* ----- Photo Section ----- */
 .product__photo {
   position: relative;
 }
-
 .photo-container {
   position: absolute;
   left: -2.5em;
@@ -243,13 +211,11 @@ nav p {
   border-radius: 6px;
   box-shadow: 4px 4px 25px -2px rgba(0, 0, 0, 0.3);
 }
-
 .photo-main {
   border-radius: 6px 6px 0 0;
   background-color: #9be010;
   background: radial-gradient(#e5f89e, #96e001);
 }
-
 .photo-main .controls {
   display: -webkit-box;
   display: flex;
@@ -258,11 +224,9 @@ nav p {
   padding: 0.8em;
   color: #fff;
 }
-
 .photo-main .controls i {
   cursor: pointer;
 }
-
 .photo-main img {
   position: absolute;
   left: -3.5em;
@@ -271,19 +235,16 @@ nav p {
   -webkit-filter: saturate(150%) contrast(120%) hue-rotate(10deg) drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
           filter: saturate(150%) contrast(120%) hue-rotate(10deg) drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
 }
-
 .photo-album {
   padding: 0.7em 1em;
   border-radius: 0 0 6px 6px;
   background-color: #fff;
 }
-
 .photo-album ul {
   display: -webkit-box;
   display: flex;
   justify-content: space-around;
 }
-
 .photo-album li {
   float: left;
   width: 55px;
@@ -294,43 +255,34 @@ nav p {
   
   border-radius: 3px;
 }
-
-/* ----- Informations Section ----- */
 .product__info {
   padding: 0.8em 0;
 }
-
 .title h1 {
   margin-bottom: 0.1em;
   color: #4c4c4c;
   font-size: 1.5em;
   font-weight: 900;
 }
-
 .title span {
   font-size: 0.7em;
   color: #a6a6a6;
 }
-
 .price {
   margin: 1.5em 0;
   color: #ff3f40;
   font-size: 1.2em;
 }
-
 .price span[data-type="price"] {
   padding-left: 0.15em;
   font-size: 2.9em;
 }
-
 .variant {
   overflow: auto;
 }
-
 .variant h3 {
   margin-bottom: 1.1em;
 }
-
 .variant li {
   float: left;
   width: 35px;
@@ -340,35 +292,28 @@ nav p {
   border-radius: 3px;
   cursor: pointer;
 }
-
 .variant li:first-child, .variant li:hover {
   border: 1px solid #01e37f;
 }
-
 .variant li:not(:first-child) {
   margin-left: 0.1em;
 }
-
 .description {
   clear: left;
   margin: 2em 0;
 }
-
 .description h3 {
   margin-bottom: 1em;
 }
-
 .description ul {
   font-size: 0.8em;
   list-style: disc;
   margin-left: 1em;
 }
-
 .description li {
   text-indent: -0.6em;
   margin-bottom: 0.5em;
 }
-
 .buy--btn {
   padding: 1em 2em;
   font-family: 'Baloo 2', cursive;
@@ -383,13 +328,11 @@ nav p {
   cursor: pointer;
   outline:0;
 }
-
 .buy--btn:active {
   -webkit-transform: scale(0.97);
           transform: scale(0.97);
   outline:0;
 }
-
 .change-view, .btn-container {
   display: -webkit-box;
   display: flex;
@@ -400,11 +343,8 @@ nav p {
   position: fixed;
   bottom: 50px;
   right: 80px;
-  /*box-shadow: */
   z-index: 999;
-
 }
-
 .button {
   display: -webkit-box;
   display: flex;
@@ -437,34 +377,28 @@ nav p {
           flex: 0 0 40px;
   box-shadow: 0 0 12px 5px rgba(0,0,0,0.2);
 }
-
 .button:hover {
   -webkit-transition: all 150ms linear;
   transition: all 150ms linear;
   opacity: .85;
 }
-
 .button:active {
   -webkit-transition: all 150ms linear;
   transition: all 150ms linear;
   opacity: .75;
 }
-
 .button:focus {
   outline: 1px dotted #959595;
   outline-offset: -4px;
 }
-
 .button.-salmon {
   color: #FFFFFF;
   background: #ff3f40;
 }
-
 .bounce {
   -webkit-animation: bounce 2s infinite;
           animation: bounce 2s infinite;
 }
-
 @-webkit-keyframes bounce {
   20%, 53%, 80%, 0%, 100% {
     -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -513,7 +447,6 @@ nav p {
     transform: translate3d(0, -4px, 0);
   }
 }
-
 .guide {
   width: 40%;
   display: flex;
@@ -524,21 +457,16 @@ nav p {
   top: 380px;
   text-align: center;
 }
-
 .guide div {
   margin: 0 auto;
 }
-
 .guide div p {
   font-size: 18px;
 }
-
 .guide div p span {
   color: #ff3f40;
   background-image: linear-gradient(1deg, rgb(255, 63, 64) 10%, rgb(255, 63, 64) 10%, transparent 14%, transparent 100%)
 }
-
-
 footer {
   width: 100%;
   /*background-color: white;*/
@@ -548,7 +476,6 @@ footer {
   text-align: center;
   bottom: 0px;
 }
-
 footer div {
   margin: 0 auto;
     

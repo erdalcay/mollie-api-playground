@@ -46,62 +46,46 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-/* ----- Variables ----- */
-/* ----- Global ----- */
 * {
   box-sizing: border-box;
 }
-
 html,
 body {
   height: 100%;
 }
-
 body {
   display: grid;
   font-family: 'Baloo 2', cursive;
   background-color: #fff;
 }
-
 section {
   height: 500px;
-  display: table; 
   margin-bottom: 0px;
-}
-
-
-section {
   text-align: center;
   vertical-align: middle;
   display: table-cell; 
   color: black;
 }
-
 section h1 {
   margin-top: 100px;
   margin-bottom: 40px;
   font-size: 3em; 
   font-weight: 600;
 }
-
 section p {
   color: rgba(0,0,0,0.7);
   font-size: 1.3em;
   font-weight: 400;
 }
-
 .start-over {
   color: rgba(0,0,0,0.7);
   margin-top: 250px; 
 }
-
 a {
   text-decoration: none;
   color: rgb(255, 63, 64);
   background-image: linear-gradient(1deg, rgb(255, 63, 64) 0%, rgb(255, 63, 64) 10%, transparent 14%, transparent 100%);
 }
-
 footer {
   width: 100%;
   /*background-color: white;*/
@@ -111,7 +95,6 @@ footer {
   text-align: center;
   bottom: 0px;
 }
-
 footer div {
   margin: 0 auto;
   background-image: linear-gradient(1deg, rgb(255, 63, 64) 10%, rgb(255, 63, 64) 10%, transparent 14%, transparent 100%);

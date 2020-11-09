@@ -10,15 +10,15 @@ const staticFilePath = path.join(__dirname, '../../../shop/admin/html');
 /**
  * Admin home
  */
-router.get('/', async (req, res) => {
-	res.redirect('/admin/dashboard');
+router.get('/', (req, res) => {
+  res.redirect('/admin/dashboard');
 });
 
 /**
  * Dashboard
  */
-router.get('/dashboard', async (req, res) => {
-	res.sendFile(path.join(staticFilePath, 'dashboard.html'));
+router.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(staticFilePath, 'dashboard.html'));
 });
 
 

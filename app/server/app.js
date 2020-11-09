@@ -31,15 +31,15 @@ app.use(express.static(staticAdmin));
  * Home page
  */
 app.get('/', (req, res) => {
-	res.redirect('/shop');
+  res.redirect('/shop');
 });
 
 /**
  * 404 for unmatched routes
  */
 app.use((req, res) => {
-	res.status(404)
-	res.sendFile(path.join(staticShop, 'html', '404.html'));
+  res.status(404)
+  res.sendFile(path.join(staticShop, 'html', '404.html'));
 });
 
 app.listen(8080);
