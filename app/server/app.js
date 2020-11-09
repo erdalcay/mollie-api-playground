@@ -3,9 +3,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
-const ordersdb = new (require('../db/db'))();
-const {Payments} = require('../lib/mollie');
-const payments = new Payments();
 
 /**
  * Bring in the routes

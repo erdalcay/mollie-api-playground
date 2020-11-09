@@ -14,6 +14,9 @@ const refundsClient = new Refunds();
 const ordersClient = new Orders();
 const paymentsdb = new (require('../../db/db'))('payments');
 
+/**
+ * Deal with post body
+ */
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 

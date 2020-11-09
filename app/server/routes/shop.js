@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const {Payments} = require('../../lib/mollie');
-const payments = new Payments();
+const paymentsClient = new Payments();
 const paymentsdb = new (require('../../db/db'))('payments');
 const staticFilePath = path.join(__dirname, '../../../shop/shop/html');
 /**
@@ -60,7 +60,7 @@ router.get('/checkout-response', async (req, res) => {
     // First find the payment Id attached to this order
     const {paymentId} = await paymentsdb.retrieve(orderId);
     // Get the payment details from Mollie
-    const singlePaymentResponse = await payments.getSinglePayment(paymentId);
+    const singlePaymentResponse = await paymentsClient.getSinglePayment(paymentId);
 
     if (!singlePaymentResponse.error) {
       // Payment status
