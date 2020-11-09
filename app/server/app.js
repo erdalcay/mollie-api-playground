@@ -39,4 +39,4 @@ app.use((req, res) => {
   res.sendFile(path.join(staticShop, 'html', '404.html'));
 });
 
-app.listen(8080);
+app.listen(3000);
