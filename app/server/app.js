@@ -1,8 +1,24 @@
 'use-strict';
+const fs = require('fs');
 const express = require('express');
 const app = express();
+const http = require('http');
+const https = require('https');
 const bodyParser = require('body-parser');
 const path = require('path');
+const dotenv = require('dotenv').config();
+
+// SSL
+const privateKey = fs.readFileSync(process.env.SSL_PKEY_LOC, 'utf8');
+const certificate = fs.readFileSync(process.env.SSL_CERT_LOC, 'utf8');
+const ca = fs.readFileSync(process.env.SSL_CA_LOC, 'utf8');
+
+// Secure
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};
 
 /**
  * Bring in the routes
@@ -39,4 +55,16 @@ app.use((req, res) => {
   res.sendFile(path.join(staticShop, 'html', '404.html'));
 });
 
-app.listen(3000);
+/**
+ *
+ */
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(80, () => {
+  // console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(443, () => {
+  // console.log('HTTPS Server running on port 443');
+});
