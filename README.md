@@ -11,7 +11,7 @@ This fictionary grocery shop is a quick interaction with Mollie's payment APIs -
 - A product page where you can initiate and complete a test ***payment***.
 - An admin dashboard where you can fetch some data directly from the **Mollie API** for a demo account (ID: **#10605257**).
 
-To give it a look, simply go to https://solutiongineer.com on your desktop device, preferably using a Chrome window, and click on every button (there are only a few of them, don't worry!). You'll see something like this:
+To give it a look, simply go to ~~https://solutiongineer.com~~ on your desktop device, preferably using a Chrome window, and click on every button (there are only a few of them, don't worry!). You'll see something like this:
 
 ![Shop](https://res.cloudinary.com/erdal-cay/image/upload/v1604900260/images/shop_mlakvv.jpg)
 
